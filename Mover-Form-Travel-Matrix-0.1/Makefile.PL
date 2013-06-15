@@ -26,10 +26,10 @@ my %WriteMakefileArgs = (
   "CONFIGURE_REQUIRES" => {
     "ExtUtils::MakeMaker" => "6.30"
   },
-  "DISTNAME" => "Mover-Date-Navigation",
+  "DISTNAME" => "Mover-Form-Travel-Matrix",
   "EXE_FILES" => [],
   "LICENSE" => "perl",
-  "NAME" => "Mover::Date::Navigation",
+  "NAME" => "Mover::Form::Travel::Matrix",
   "PREREQ_PM" => {
     "HTML::FormHandler" => 0,
     "HTML::FormHandler::Moose" => 0,
