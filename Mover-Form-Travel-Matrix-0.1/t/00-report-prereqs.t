@@ -10,9 +10,9 @@ use File::Spec::Functions;
 use List::Util qw/max/;
 
 my @modules = qw(
+  Capture::Tiny
   Data::Dump
   ExtUtils::MakeMaker
-  File::Find
   File::Spec::Functions
   File::Temp
   HTML::FormHandler
@@ -26,6 +26,7 @@ my @modules = qw(
   Modern::Perl
   Regexp::Common
   Test::More
+  blib
   namespace::autoclean
   strict
   warnings

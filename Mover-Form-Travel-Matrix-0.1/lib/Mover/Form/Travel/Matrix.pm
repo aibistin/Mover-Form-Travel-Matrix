@@ -81,7 +81,7 @@ has_field 'submit' => (
 
 has '+info_message'    => ( default => 'Starting point.' );
 has '+success_message' => ( default => 'Form successfully submitted' );
-has '+error_message'   => ( default => 'This form is a mess!' );
+has '+error_message'   => ( default => 'Please fix the errors on this form!' );
 
 #------------------------------------------------------------------------------
 #------ For Details -- See HTML::FormHandler::Manual::Rendering
@@ -102,8 +102,6 @@ sub build_update_subfields {
             element_attr => {
                 class       => [$field_size],
                 placeholder => 'More address detail',
-
-                #                disabled => 1,
             }
         },
         'addresses.contains.city' =>

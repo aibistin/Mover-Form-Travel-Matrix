@@ -4,7 +4,7 @@
       "Austin Kenny <aibistin.cionnaith@gmail.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.300030, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "Dist::Zilla version 4.300035, CPAN::Meta::Converter version 2.132140",
    "license" : [
       "perl_5"
    ],
@@ -34,14 +34,15 @@
       },
       "test" : {
          "requires" : {
+            "Capture::Tiny" : "0",
             "Data::Dump" : "0",
             "ExtUtils::MakeMaker" : "0",
-            "File::Find" : "0",
             "File::Spec::Functions" : "0",
             "File::Temp" : "0",
             "HTML::FormHandler::Test" : "0",
             "List::Util" : "0",
-            "Test::More" : "0",
+            "Test::More" : "0.88",
+            "blib" : "0",
             "strict" : "0",
             "warnings" : "0"
          }
