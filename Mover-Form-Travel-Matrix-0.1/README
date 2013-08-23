@@ -4,6 +4,106 @@ NAME
 VERSION
     version 0.1
 
+SYNOPSIS
+        # Creates an address form repeated once (using "fif_form_value" attribute)
+        $address_form = Mover::Form::Travel::Matrix->new( fif_from_value => 1 );
+
+  
+has '+field_name_space' => ( default => 'Mover::Form::Field' );
+  
+has '+name'        => ( default => $form_name );
+  
+has '+html_prefix' => ( default => 1 );
+  
+has '+is_html5'    => ( default => 1 );
+  
+has '+http_method' => ( default => $http_method );
+  
+has '+action'      => ( default => $form_action );
+  
+has_field 'addresses' => (
+    type         => 'Repeatable',
+    setup_for_js => 1,
+    do_wrapper   => 1,
+    tags         => { controls_div => 1 },
+    auto_id      => 1,
+);
+  
+has_field 'addresses.contains' => ( type => 'Address', );
+  
+has_field 'submit' => (
+    type         => 'Submit',
+    widget       => 'ButtonTag',
+    element_attr => { class => [ 'btn', $button_class, $button_size ] },
+    do_wrapper   => 0,
+    value        => 'Get Travel Time'
+);
+  
+has '+info_message'    => ( default => 'Starting point.' );
+  
+has '+success_message' => ( default => 'Form successfully submitted' );
+  
+has '+error_message'   => ( default => 'Please fix the errors on this form!' );
+  build_do_form_wrapper
+   1
+  build_update_subfields
+        {
+            all => {
+                tags     => { no_errors => 0 },
+                do_label => 0,
+            },
+            by_type => { Select => { element_class => [$select_field_size] } },
+            'addresses.contains.address_1' =>
+              { element_attr => { class => [$field_size], } },
+            'addresses.contains.address_2' => {
+                label        => 'Address 2',
+                element_attr => {
+                    class       => [$field_size],
+                    placeholder => 'More address detail',
+                }
+            },
+            'addresses.contains.city' =>
+              { element_attr => { class => [$field_size], } },
+            'addresses.contains.country' =>
+              { element_attr => { class => [$field_size], } },
+            'addresses.contains.zip' =>
+              { element_attr => { class => [$field_size], } },
+        };
+
+NAME
+ Mover::Form::Travel::Matrix -  Repeatable Address form using
+ HTML::FormHandler
+VERSION
+Version 0.01
+DESCRIPTION
+ This Module can be used to create an address form with multiple repatable
+ address capability. It contains in built field validation. It also uses
+ Bootstrap CSS formatting.
+SEE ALSO
+    *   HTML::FormHandler
+
+    *   Moose
+
+    *   HTML::FormHandler::Widget::Theme::Bootstrap
+
+    *   HTML::FormHandler::Widget::Theme::BootstrapFormMessages
+
+    *   HTML::FormHandler::Render::RepeatableJs
+
+AUTHOR
+    Austin Kenny, "<aibistin.cionnaith at gmail.com>"
+
+ACKNOWLEDGEMENTS
+       All CPAN Contributers
+LICENSE AND COPYRIGHT
+    Copyright 2013 Austin Kenny.
+
+    This program is free software; you can redistribute it and/or modify it
+    under the terms of either: the GNU General Public License as published
+    by the Free Software Foundation; or the Artistic License.
+
+    See http://dev.perl.org/licenses/ for more information.
+
 AUTHOR
     Austin Kenny <aibistin.cionnaith@gmail.com>
 

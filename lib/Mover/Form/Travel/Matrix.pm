@@ -19,7 +19,6 @@ with 'HTML::FormHandler::Widget::Theme::Bootstrap',
   'HTML::FormHandler::Render::RepeatableJs';
 our $VERSION = '0.1';
 
-#$VERSION = eval $VERSION;
 use HTML::FormHandler::Types qw/Trim Collapse/;
 use Regexp::Common qw /zip/;
 
@@ -40,16 +39,41 @@ my $button_class = q/btn-primary/;    #btn-primary -info -success
 #-------------------------------------------------------------------------------
 #  Attributes
 #-------------------------------------------------------------------------------
-
+=head2
 has '+field_name_space' => ( default => 'Mover::Form::Field' );
-
+=cut
+has '+field_name_space' => ( default => 'Mover::Form::Field' );
+=head2
 has '+name'        => ( default => $form_name );
+=cut
+has '+name'        => ( default => $form_name );
+=head2
 has '+html_prefix' => ( default => 1 );
+=cut
+has '+html_prefix' => ( default => 1 );
+=head2
 has '+is_html5'    => ( default => 1 );
+=cut
+has '+is_html5'    => ( default => 1 );
+=head2
 has '+http_method' => ( default => $http_method );
+=cut
+has '+http_method' => ( default => $http_method );
+=head2
+has '+action'      => ( default => $form_action );
+=cut
 has '+action'      => ( default => $form_action );
 
 #----- Mover::Form::Field::Address that is Repeatable
+=head2
+has_field 'addresses' => (
+    type         => 'Repeatable',
+    setup_for_js => 1,
+    do_wrapper   => 1,
+    tags         => { controls_div => 1 },
+    auto_id      => 1,
+);
+=cut
 has_field 'addresses' => (
     type         => 'Repeatable',
     setup_for_js => 1,
@@ -59,6 +83,9 @@ has_field 'addresses' => (
 );
 
 # has_field 'addresses';
+=head2
+has_field 'addresses.contains' => ( type => 'Address', );
+=cut
 has_field 'addresses.contains' => ( type => 'Address', );
 
 #has_field 'add_address' => (
@@ -71,6 +98,15 @@ has_field 'addresses.contains' => ( type => 'Address', );
 #    value => 'Remove Address',
 #);
 
+=head2
+has_field 'submit' => (
+    type         => 'Submit',
+    widget       => 'ButtonTag',
+    element_attr => { class => [ 'btn', $button_class, $button_size ] },
+    do_wrapper   => 0,
+    value        => 'Get Travel Time'
+);
+=cut
 has_field 'submit' => (
     type         => 'Submit',
     widget       => 'ButtonTag',
@@ -79,15 +115,53 @@ has_field 'submit' => (
     value        => 'Get Travel Time'
 );
 
+=head2
 has '+info_message'    => ( default => 'Starting point.' );
+=cut
+has '+info_message'    => ( default => 'Starting point.' );
+=head2
 has '+success_message' => ( default => 'Form successfully submitted' );
+=cut
+has '+success_message' => ( default => 'Form successfully submitted' );
+=head2
+has '+error_message'   => ( default => 'Please fix the errors on this form!' );
+=cut
 has '+error_message'   => ( default => 'Please fix the errors on this form!' );
 
 #------------------------------------------------------------------------------
 #------ For Details -- See HTML::FormHandler::Manual::Rendering
 #------ Use the Wrapper Theme
+=head2 build_do_form_wrapper
+   1
+=cut
 sub build_do_form_wrapper { 1 }
 
+=head2  build_update_subfields
+ 
+    {
+        all => {
+            tags     => { no_errors => 0 },
+            do_label => 0,
+        },
+        by_type => { Select => { element_class => [$select_field_size] } },
+        'addresses.contains.address_1' =>
+          { element_attr => { class => [$field_size], } },
+        'addresses.contains.address_2' => {
+            label        => 'Address 2',
+            element_attr => {
+                class       => [$field_size],
+                placeholder => 'More address detail',
+            }
+        },
+        'addresses.contains.city' =>
+          { element_attr => { class => [$field_size], } },
+        'addresses.contains.country' =>
+          { element_attr => { class => [$field_size], } },
+        'addresses.contains.zip' =>
+          { element_attr => { class => [$field_size], } },
+    };
+
+=cut
 sub build_update_subfields {
     {
         all => {
@@ -120,3 +194,70 @@ no HTML::FormHandler::Moose;
 __PACKAGE__->meta->make_immutable;
 1;
 
+__END__
+
+=head1 NAME
+ Mover::Form::Travel::Matrix -  Repeatable Address form using
+ HTML::FormHandler
+=cut
+
+=head1 VERSION
+Version 0.01
+=cut
+
+=head1 SYNOPSIS
+                                           
+    # Creates an address form repeated once (using "fif_form_value" attribute)
+    $address_form = Mover::Form::Travel::Matrix->new( fif_from_value => 1 );
+
+
+=cut
+
+=head1 DESCRIPTION
+ This Module can be used to create an address form with multiple repatable
+ address capability. It contains in built field validation. It also uses
+ Bootstrap CSS formatting.
+=cut
+
+=head1 SEE ALSO
+    
+=over
+
+=item *
+ L<HTML::FormHandler>
+
+=item *
+ L<Moose>
+
+=item *
+ L<HTML::FormHandler::Widget::Theme::Bootstrap>
+
+=item *
+ L<HTML::FormHandler::Widget::Theme::BootstrapFormMessages>
+
+=item *
+ L<HTML::FormHandler::Render::RepeatableJs>
+
+=back
+
+
+=head1 AUTHOR
+
+Austin Kenny, C<< <aibistin.cionnaith at gmail.com> >>
+
+
+=head1 ACKNOWLEDGEMENTS
+       All CPAN Contributers
+=cut
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright 2013 Austin Kenny.
+
+This program is free software; you can redistribute it and/or modify it
+under the terms of either: the GNU General Public License as published
+by the Free Software Foundation; or the Artistic License.
+
+See http://dev.perl.org/licenses/ for more information.
+
+=cut
